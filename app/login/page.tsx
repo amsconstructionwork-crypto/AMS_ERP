@@ -69,7 +69,7 @@ export default function LoginPage() {
                 type="text"
                 name="username"
                 required
-                className="w-full rounded-lg border border-navy/20 bg-white px-4 py-3 text-sm text-navy outline-none transition-all focus:border-orange focus:ring-1 focus:ring-orange/50 shadow-sm"
+                className="w-full rounded-xl border-2 border-navy/10 bg-navy/5 px-4 py-3.5 text-sm text-navy outline-none transition-all hover:border-navy/20 focus:bg-white focus:border-orange focus:ring-4 focus:ring-orange/10"
                 placeholder="Enter your username"
               />
             </div>
@@ -80,7 +80,7 @@ export default function LoginPage() {
                   type={showPassword ? "text" : "password"}
                   name="password"
                   required
-                  className="w-full rounded-lg border border-navy/20 bg-white pl-4 pr-12 py-3 text-sm text-navy outline-none transition-all focus:border-orange focus:ring-1 focus:ring-orange/50 shadow-sm"
+                  className="w-full rounded-xl border-2 border-navy/10 bg-navy/5 pl-4 pr-12 py-3.5 text-sm text-navy outline-none transition-all hover:border-navy/20 focus:bg-white focus:border-orange focus:ring-4 focus:ring-orange/10"
                   placeholder="••••••••"
                 />
                 <button
