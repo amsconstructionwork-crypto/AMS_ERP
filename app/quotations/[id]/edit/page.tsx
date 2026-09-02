@@ -7,6 +7,7 @@ export const dynamic = "force-dynamic";
 export default async function EditQuotationPage({ params }: { params: { id: string } }) {
   const id = Number(params.id);
   if (!Number.isFinite(id)) notFound();
+  if (!sql) notFound();
 
   const qRows = await sql(`SELECT * FROM quotations WHERE id = $1`, [id]);
   if (qRows.length === 0) notFound();
