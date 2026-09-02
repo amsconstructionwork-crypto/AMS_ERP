@@ -32,10 +32,10 @@ export default function LoginPage() {
         </div>
         
         <div className="relative z-10 flex flex-col h-full justify-center items-center text-center">
-          <div className="bg-white/10 p-8 rounded-3xl backdrop-blur-sm border border-white/10 shadow-2xl">
-            <Image src="/logo.png" alt="AMS Civil Construction" width={220} height={90} className="object-contain brightness-0 invert" priority />
+          <div className="mb-8">
+            <Image src="/logo.png" alt="AMS Civil Construction" width={240} height={100} className="object-contain brightness-0 invert" priority />
           </div>
-          <h2 className="mt-12 text-3xl lg:text-4xl font-display font-bold text-white tracking-wide">
+          <h2 className="text-3xl lg:text-4xl font-display font-bold text-white tracking-wide">
             Enterprise Management
           </h2>
           <p className="mt-4 text-white/70 text-lg max-w-md mx-auto">
@@ -53,8 +53,8 @@ export default function LoginPage() {
         <div className="w-full max-w-md bg-white md:bg-transparent rounded-2xl md:rounded-none p-8 md:p-0 shadow-2xl md:shadow-none border border-navy/5 md:border-none">
           
           {/* Mobile Logo */}
-          <div className="md:hidden mb-8 flex justify-center">
-            <Image src="/logo.png" alt="AMS Civil Construction" width={180} height={70} className="object-contain" priority />
+          <div className="md:hidden mb-10 flex justify-center">
+            <Image src="/logo.png" alt="AMS Civil Construction" width={160} height={60} className="object-contain" priority />
           </div>
 
           <div className="mb-8 text-center md:text-left">
@@ -62,37 +62,25 @@ export default function LoginPage() {
             <p className="mt-2 text-sm text-navy/60">Please sign in to your account</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
             <div>
-              <label className="mb-1.5 block text-sm font-semibold text-navy/90">Username</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-navy/40">
-                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                </div>
-                <input
-                  type="text"
-                  name="username"
-                  required
-                  className="w-full rounded-xl border border-navy/20 bg-navy/5 pl-10 pr-4 py-3 text-sm text-navy outline-none transition-all focus:bg-white focus:border-orange focus:ring-2 focus:ring-orange/20"
-                  placeholder="Enter your username"
-                />
-              </div>
+              <label className="mb-2 block text-sm font-semibold text-navy/90">Username</label>
+              <input
+                type="text"
+                name="username"
+                required
+                className="w-full rounded-lg border border-navy/20 bg-white px-4 py-3 text-sm text-navy outline-none transition-all focus:border-orange focus:ring-1 focus:ring-orange/50 shadow-sm"
+                placeholder="Enter your username"
+              />
             </div>
             <div>
-              <label className="mb-1.5 block text-sm font-semibold text-navy/90">Password</label>
+              <label className="mb-2 block text-sm font-semibold text-navy/90">Password</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-navy/40">
-                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                  </svg>
-                </div>
                 <input
                   type={showPassword ? "text" : "password"}
                   name="password"
                   required
-                  className="w-full rounded-xl border border-navy/20 bg-navy/5 pl-10 pr-10 py-3 text-sm text-navy outline-none transition-all focus:bg-white focus:border-orange focus:ring-2 focus:ring-orange/20"
+                  className="w-full rounded-lg border border-navy/20 bg-white pl-4 pr-12 py-3 text-sm text-navy outline-none transition-all focus:border-orange focus:ring-1 focus:ring-orange/50 shadow-sm"
                   placeholder="••••••••"
                 />
                 <button
@@ -125,7 +113,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isPending}
-              className="mt-4 flex w-full items-center justify-center rounded-xl bg-orange py-3.5 text-base font-bold text-white shadow-lg shadow-orange/20 transition-all hover:bg-orange/90 hover:shadow-orange/40 hover:-translate-y-0.5 disabled:opacity-70 disabled:hover:translate-y-0"
+              className="mt-4 flex w-full items-center justify-center rounded-lg bg-orange py-3.5 text-base font-bold text-white shadow-md transition-all hover:bg-orange/90 hover:shadow-lg disabled:opacity-70"
             >
               {isPending ? (
                 <>
