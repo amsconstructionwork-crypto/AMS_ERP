@@ -22,7 +22,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-white md:bg-[#f8f9fa]">
+    <div className="flex min-h-screen bg-white">
       {/* Left side - Branding (Hidden on mobile) */}
       <div className="hidden md:flex md:w-1/2 lg:w-3/5 bg-navy flex-col justify-between p-12 relative overflow-hidden">
         {/* Background Decorative Elements */}
@@ -49,15 +49,15 @@ export default function LoginPage() {
       </div>
 
       {/* Right side - Login Form */}
-      <div className="flex w-full md:w-1/2 lg:w-2/5 flex-col justify-center items-center p-6 sm:p-12 relative">
-        <div className="w-full max-w-md bg-white md:bg-transparent rounded-2xl md:rounded-none p-8 md:p-0 shadow-2xl md:shadow-none border border-navy/5 md:border-none">
+      <div className="flex w-full md:w-1/2 lg:w-2/5 flex-col justify-center items-center p-6 sm:p-12 md:p-12 relative bg-white">
+        <div className="w-full max-w-sm">
           
           {/* Mobile Logo */}
-          <div className="md:hidden mb-10 flex justify-center">
-            <Image src="/logo.png" alt="AMS Civil Construction" width={160} height={60} className="object-contain" priority />
+          <div className="md:hidden mb-12 flex justify-center">
+            <Image src="/logo.png" alt="AMS Civil Construction" width={180} height={75} className="object-contain" priority />
           </div>
 
-          <div className="mb-8 text-center md:text-left">
+          <div className="mb-10 text-center md:text-left">
             <h1 className="font-display text-3xl font-bold tracking-tight text-navy">Welcome Back</h1>
             <p className="mt-2 text-sm text-navy/60">Please sign in to your account</p>
           </div>
