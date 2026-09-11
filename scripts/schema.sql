@@ -34,3 +34,33 @@ CREATE INDEX IF NOT EXISTS idx_quotations_created_at ON quotations(created_at DE
 -- Sequence used to generate friendly document numbers like AMS-QT-0001 / AMS-BL-0001
 CREATE SEQUENCE IF NOT EXISTS quotation_number_seq START 1;
 CREATE SEQUENCE IF NOT EXISTS bill_number_seq START 1;
+
+-- 1. Sites Table
+CREATE TABLE IF NOT EXISTS sites (
+  id             SERIAL PRIMARY KEY,
+  name           TEXT NOT NULL,
+  client_name    TEXT NOT NULL DEFAULT '',
+  address        TEXT NOT NULL DEFAULT '',
+  created_at     TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- 2. Bills Generated (Work Done)
+CREATE TABLE IF NOT EXISTS site_bills (
+  id               SERIAL PRIMARY KEY,
+  site_id          INTEGER NOT NULL REFERENCES sites(id) ON DELETE CASCADE,
+  bill_date        DATE NOT NULL DEFAULT CURRENT_DATE,
+  bill_number      TEXT NOT NULL,
+  description      TEXT NOT NULL DEFAULT '',
+  amount           NUMERIC(12,2) NOT NULL DEFAULT 0,
+  created_at       TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- 3. Payments Received
+CREATE TABLE IF NOT EXISTS site_payments (
+  id               SERIAL PRIMARY KEY,
+  site_id          INTEGER NOT NULL REFERENCES sites(id) ON DELETE CASCADE,
+  payment_date     DATE NOT NULL DEFAULT CURRENT_DATE,
+  reference_no     TEXT NOT NULL DEFAULT '', -- UTR or Cheque No
+  amount           NUMERIC(12,2) NOT NULL DEFAULT 0,
+  created_at       TIMESTAMPTZ NOT NULL DEFAULT now()
+);

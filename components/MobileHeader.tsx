@@ -69,6 +69,13 @@ export default function MobileHeader({ children }: { children: React.ReactNode }
             >
               Bills
             </Link>
+            <Link 
+              href="/projects" 
+              className="py-3 text-base font-medium text-orange transition-colors border-b border-white/5 last:border-0"
+              onClick={() => setIsOpen(false)}
+            >
+              Projects & Ledgers
+            </Link>
           </nav>
           
           <div className="bg-navy-light/50 px-5 py-4 border-t border-white/10">
