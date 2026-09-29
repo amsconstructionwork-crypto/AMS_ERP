@@ -86,9 +86,9 @@ const styles = StyleSheet.create({
   totalDivider: { borderTopWidth: 1, borderTopColor: BORDER, marginVertical: 8 },
 
   // Signature
-  signRow: { flexDirection: "row", justifyContent: "flex-end", marginTop: 50, paddingHorizontal: 30 },
+  signRow: { flexDirection: "row", justifyContent: "flex-end", marginTop: 30, paddingHorizontal: 30 },
   signCol: { width: "35%", textAlign: "center", alignItems: "center" },
-  signFor: { fontSize: 11, fontWeight: "bold", color: NAVY, marginBottom: 50, textTransform: "uppercase" },
+  signFor: { fontSize: 11, fontWeight: "bold", color: NAVY, marginBottom: 35, textTransform: "uppercase" },
   signName: { fontSize: 10, fontWeight: "bold", color: NAVY, borderTopWidth: 1, borderTopColor: NAVY, width: "100%", paddingTop: 6 }
 });
 
