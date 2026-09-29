@@ -243,6 +243,18 @@ export default function QuotationPdf({ quotation, logoBase64 }: { quotation: Quo
               <Text style={styles.subtotalLabel}>Subtotal</Text>
               <Text style={styles.subtotalValue}>{formatINR(subtotal)}</Text>
             </View>
+            {Number(quotation.discount) > 0 && (
+              <View style={[styles.subtotalRow, { borderTopWidth: 0 }]}>
+                <Text style={styles.subtotalLabel}>Discount</Text>
+                <Text style={styles.subtotalValue}>- {formatINR(Number(quotation.discount))}</Text>
+              </View>
+            )}
+            {Number(quotation.gst_percent) > 0 && (
+              <View style={[styles.subtotalRow, { borderTopWidth: 0 }]}>
+                <Text style={styles.subtotalLabel}>GST ({quotation.gst_percent}%)</Text>
+                <Text style={styles.subtotalValue}>{formatINR(gst)}</Text>
+              </View>
+            )}
             <View style={styles.grandRow}>
               <Text style={styles.grandLabel}>GRAND TOTAL</Text>
               <Text style={styles.grandValue}>{formatINR(grandTotal)}</Text>
