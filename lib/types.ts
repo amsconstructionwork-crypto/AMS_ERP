@@ -53,3 +53,23 @@ export function formatINR(n: number) {
     Number.isFinite(n) ? n : 0
   );
 }
+
+export interface MeasurementItem {
+  id?: number;
+  particulars: string;
+  no_of_items: number;
+  length_mm: number;
+  breadth_mm: number;
+  depth_mm: number;
+  remarks: string;
+}
+
+export interface MeasurementSheet {
+  id: number;
+  sheet_number: string;
+  name_of_work: string;
+  item: string;
+  date: string;
+  created_at: string;
+  items: MeasurementItem[];
+}

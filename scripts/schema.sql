@@ -64,3 +64,27 @@ CREATE TABLE IF NOT EXISTS site_payments (
   amount           NUMERIC(12,2) NOT NULL DEFAULT 0,
   created_at       TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+-- 4. Measurement Sheets
+CREATE TABLE IF NOT EXISTS measurements (
+  id             SERIAL PRIMARY KEY,
+  sheet_number   TEXT NOT NULL UNIQUE,
+  name_of_work   TEXT NOT NULL DEFAULT '',
+  item           TEXT NOT NULL DEFAULT '',
+  date           DATE NOT NULL DEFAULT CURRENT_DATE,
+  created_at     TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE TABLE IF NOT EXISTS measurement_items (
+  id             SERIAL PRIMARY KEY,
+  measurement_id INTEGER NOT NULL REFERENCES measurements(id) ON DELETE CASCADE,
+  position       INTEGER NOT NULL DEFAULT 0,
+  particulars    TEXT NOT NULL DEFAULT '',
+  no_of_items    NUMERIC(12,2) NOT NULL DEFAULT 1,
+  length_mm      NUMERIC(12,2) NOT NULL DEFAULT 0,
+  breadth_mm     NUMERIC(12,2) NOT NULL DEFAULT 0,
+  depth_mm       NUMERIC(12,2) NOT NULL DEFAULT 0,
+  remarks        TEXT NOT NULL DEFAULT ''
+);
+
+CREATE SEQUENCE IF NOT EXISTS measurement_number_seq START 1;
