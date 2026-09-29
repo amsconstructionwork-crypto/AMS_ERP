@@ -37,19 +37,26 @@ export default function ShareButtons({
     const label = docType === "bill" ? "Bill" : "Quotation";
     const subject = `AMS Civil Construction — ${label} ${docNumber}`;
     const body =
-      `Dear ${clientName || "Sir/Madam"},\n\n` +
-      `Please find your ${label} (${docNumber}) from AMS Civil Construction.\n` +
+      `Dear ${clientName || "Valued Client"},\n\n` +
+      `Please find your ${label} (${docNumber}) from AMS Civil Construction attached below.\n` +
       `Grand Total: ₹${grandTotal}\n\n` +
-      `You can view/download it here: ${pdfUrl()}\n\n` +
-      `Best Regards,\n` +
-      `AMS Civil Construction\n` +
-      `Bungalow Construction | Renovation | Interior Civil Work | Waterproofing\n\n` +
-      `🌐 Website: https://www.amscivilwork.in\n` +
-      `📸 Instagram: https://www.instagram.com/amscivilwork/\n` +
-      `👍 Facebook: https://www.facebook.com/profile.php?id=61570712849063\n` +
-      `⭐ Google Reviews: https://share.google/2MVNrHEWCCTqYsU3O\n\n` +
-      `📞 +91 87793 91690 / +91 90042 98911\n` +
-      `📧 ams.constructionwork@gmail.com`;
+      `📄 View / Download your document here: ${pdfUrl()}\n\n` +
+      `Thank you for choosing AMS Civil Construction. We look forward to providing you with the highest quality of service.\n\n` +
+      `Best Regards,\n\n` +
+      `=========================================\n` +
+      `🏗️ AMS CIVIL CONSTRUCTION\n` +
+      `Mumbai's Trusted Construction Partner\n` +
+      `Bungalow Construction | Renovation | Interior | Waterproofing\n` +
+      `=========================================\n\n` +
+      `🔗 CONNECT WITH US:\n` +
+      `🌍 Website:    https://www.amscivilwork.in\n` +
+      `📸 Instagram:  https://www.instagram.com/amscivilwork/\n` +
+      `👍 Facebook:   https://www.facebook.com/profile.php?id=61570712849063\n` +
+      `⭐ Reviews:    https://share.google/2MVNrHEWCCTqYsU3O\n\n` +
+      `📞 Contact:    +91 87793 91690 | +91 90042 98911\n` +
+      `📧 Email:      ams.constructionwork@gmail.com\n` +
+      `=========================================`;
+      
     const url = `mailto:${clientEmail || ""}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.location.href = url;
   }
