@@ -26,10 +26,10 @@ const htmlBody = `
     <p style="margin: 4px 0; font-size: 14px; color: #555;">Mumbai's Trusted Construction Partner</p>
     <p style="margin: 4px 0; font-size: 13px; color: #777;">Bungalow Construction | Renovation | Interior | Waterproofing</p>
     <br/>
-    <p style="margin: 3px 0;">🌐 <a href="https://www.amscivilwork.in" style="color: #0F2138; text-decoration: none;">www.amscivilwork.in</a></p>
-    <p style="margin: 3px 0;">📸 <a href="https://www.instagram.com/amscivilwork/" style="color: #0F2138; text-decoration: none;">Instagram Profile</a></p>
-    <p style="margin: 3px 0;">👍 <a href="https://www.facebook.com/profile.php?id=61570712849063" style="color: #0F2138; text-decoration: none;">Facebook Page</a></p>
-    <p style="margin: 3px 0;">⭐ <a href="https://share.google/2MVNrHEWCCTqYsU3O" style="color: #0F2138; text-decoration: none;">Google Reviews</a></p>
+    <p style="margin: 5px 0;"><img src="https://img.icons8.com/color/48/domain--v1.png" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" alt="Web"/> <a href="https://www.amscivilwork.in" style="color: #0F2138; text-decoration: none; vertical-align: middle;">www.amscivilwork.in</a></p>
+    <p style="margin: 5px 0;"><img src="https://img.icons8.com/color/48/instagram-new--v1.png" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" alt="Instagram"/> <a href="https://www.instagram.com/amscivilwork/" style="color: #0F2138; text-decoration: none; vertical-align: middle;">Instagram Profile</a></p>
+    <p style="margin: 5px 0;"><img src="https://img.icons8.com/color/48/facebook-new.png" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" alt="Facebook"/> <a href="https://www.facebook.com/profile.php?id=61570712849063" style="color: #0F2138; text-decoration: none; vertical-align: middle;">Facebook Page</a></p>
+    <p style="margin: 5px 0;"><img src="https://img.icons8.com/color/48/google-logo.png" width="16" height="16" style="vertical-align: middle; margin-right: 6px;" alt="Google"/> <a href="https://share.google/2MVNrHEWCCTqYsU3O" style="color: #0F2138; text-decoration: none; vertical-align: middle;">Google Reviews</a></p>
     <br/>
     <p style="margin: 3px 0; font-weight: bold;">📞 +91 87793 91690 | +91 90042 98911</p>
     <p style="margin: 3px 0;">📧 ams.constructionwork@gmail.com</p>
