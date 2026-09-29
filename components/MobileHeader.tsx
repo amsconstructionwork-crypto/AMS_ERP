@@ -71,10 +71,17 @@ export default function MobileHeader({ children }: { children: React.ReactNode }
             </Link>
             <Link 
               href="/projects" 
-              className="py-3 text-base font-medium text-orange transition-colors border-b border-white/5 last:border-0"
+              className="py-3 text-base font-medium hover:text-orange transition-colors border-b border-white/5 last:border-0"
               onClick={() => setIsOpen(false)}
             >
               Projects & Ledgers
+            </Link>
+            <Link 
+              href="/measurements" 
+              className="py-3 text-base font-medium text-orange transition-colors border-b border-white/5 last:border-0"
+              onClick={() => setIsOpen(false)}
+            >
+              Measurements
             </Link>
           </nav>
           
