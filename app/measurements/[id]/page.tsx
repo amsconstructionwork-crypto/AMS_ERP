@@ -74,6 +74,12 @@ export default function MeasurementDetailPage() {
     window.open(`/api/measurements/${sheet?.id}/pdf`, "_blank");
   }
 
+  // Check if 24 hours have passed since creation
+  const createdDate = new Date(sheet.created_at);
+  const now = new Date();
+  const diffHours = (now.getTime() - createdDate.getTime()) / (1000 * 60 * 60);
+  const canDelete = diffHours <= 24;
+
   return (
     <div className="space-y-6 pb-20">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -84,12 +90,14 @@ export default function MeasurementDetailPage() {
           </p>
         </div>
         <div className="flex gap-2">
-          <button 
-            onClick={handleDelete}
-            className="rounded-md border border-red-200 bg-red-50 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-100 transition-colors"
-          >
-            Delete
-          </button>
+          {canDelete && (
+            <button 
+              onClick={handleDelete}
+              className="rounded-md border border-red-200 bg-red-50 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-100 transition-colors"
+            >
+              Delete
+            </button>
+          )}
           <button 
             onClick={downloadPdf}
             className="rounded-md bg-orange px-4 py-2 text-sm font-medium text-white hover:bg-orange/90 transition-colors"

@@ -29,6 +29,16 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
     if (!Number.isFinite(id)) return NextResponse.json({ error: "Invalid id" }, { status: 400 });
 
     const sql = requireDb();
+    const sheets = await sql(`SELECT created_at FROM measurements WHERE id = $1`, [id]);
+    if (sheets.length === 0) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    
+    const createdDate = new Date(sheets[0].created_at);
+    const now = new Date();
+    const diffHours = (now.getTime() - createdDate.getTime()) / (1000 * 60 * 60);
+    if (diffHours > 24) {
+      return NextResponse.json({ error: "Cannot delete after 24 hours" }, { status: 403 });
+    }
+
     await sql(`DELETE FROM measurements WHERE id = $1`, [id]);
     return NextResponse.json({ success: true });
   } catch (err: any) {
@@ -42,6 +52,17 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
     if (!Number.isFinite(id)) return NextResponse.json({ error: "Invalid id" }, { status: 400 });
 
     const sql = requireDb();
+    
+    const sheets = await sql(`SELECT created_at FROM measurements WHERE id = $1`, [id]);
+    if (sheets.length === 0) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    
+    const createdDate = new Date(sheets[0].created_at);
+    const now = new Date();
+    const diffHours = (now.getTime() - createdDate.getTime()) / (1000 * 60 * 60);
+    if (diffHours > 24) {
+      return NextResponse.json({ error: "Cannot edit after 24 hours" }, { status: 403 });
+    }
+
     const body = await req.json();
     const { company_name, name_of_work, item, date, items, summary_items } = body;
 
