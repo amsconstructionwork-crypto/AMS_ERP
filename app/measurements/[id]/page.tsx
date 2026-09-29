@@ -25,7 +25,8 @@ export default function MeasurementDetailPage() {
   if (loading) return <div className="p-8 text-navy/60">Loading...</div>;
   if (!sheet) return <div className="p-8 text-red-500">Measurement sheet not found</div>;
 
-  let totalSqm = 0;
+  let totalAdd = 0;
+  let totalLess = 0;
   sheet.items.forEach(it => {
     const l = Number(it.length_mm) || 0;
     const b = Number(it.breadth_mm) || 0;
@@ -35,9 +36,11 @@ export default function MeasurementDetailPage() {
     if (d > 0) qty = l * b * d * no;
     else qty = l * b * no;
     
-    if (it.is_less) totalSqm -= qty;
-    else totalSqm += qty;
+    if (it.is_less) totalLess += qty;
+    else totalAdd += qty;
   });
+
+  const totalSqm = totalAdd - totalLess;
 
   async function handleDelete() {
     if (!confirm("Are you sure you want to delete this sheet?")) return;
@@ -129,11 +132,19 @@ export default function MeasurementDetailPage() {
         <div className="w-full md:w-1/3 rounded-xl border border-navy/10 bg-navy text-white p-6 shadow-md space-y-3">
           <h3 className="text-lg font-bold border-b border-white/10 pb-2 mb-4">Total Measurements</h3>
           <div className="flex justify-between items-center text-sm">
-            <span className="text-white/70 font-medium">Total (Sq.M/Cu.M):</span>
-            <span className="font-mono text-lg">{totalSqm.toFixed(4)}</span>
+            <span className="text-white/70 font-medium">Gross Area:</span>
+            <span className="font-mono text-lg">{totalAdd.toFixed(4)}</span>
+          </div>
+          <div className="flex justify-between items-center text-sm text-red-300">
+            <span className="font-medium">Total Deductions:</span>
+            <span className="font-mono text-lg">- {totalLess.toFixed(4)}</span>
           </div>
           <div className="flex justify-between items-center text-sm pt-2 border-t border-white/10">
-            <span className="text-white/70 font-medium">Total (Sq.Ft/Cu.Ft):</span>
+            <span className="text-white/70 font-medium">Net Area (Sq.M):</span>
+            <span className="font-mono text-lg font-bold">{totalSqm.toFixed(4)}</span>
+          </div>
+          <div className="flex justify-between items-center text-sm pt-2 border-t border-white/10">
+            <span className="text-white/70 font-medium">Net Area (Sq.Ft):</span>
             <span className="font-mono text-lg text-orange font-bold">{(totalSqm * 10.7639).toFixed(4)}</span>
           </div>
         </div>

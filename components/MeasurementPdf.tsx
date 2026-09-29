@@ -50,6 +50,8 @@ export default function MeasurementPdf({ sheet }: { sheet: MeasurementSheet }) {
     displayItems.push({ particulars: "", no_of_items: 0, length_mm: 0, breadth_mm: 0, depth_mm: 0, remarks: "" } as MeasurementItem);
   }
 
+  let totalAdd = 0;
+  let totalLess = 0;
   let totalSqm = 0;
   
   return (
@@ -98,8 +100,13 @@ export default function MeasurementPdf({ sheet }: { sheet: MeasurementSheet }) {
               const num = Number(it.no_of_items) || 1;
               qtySqm = (d_m > 0 ? l_m * b_m * d_m : l_m * b_m) * num;
               
-              if (it.is_less) totalSqm -= qtySqm;
-              else totalSqm += qtySqm;
+              if (it.is_less) {
+                totalLess += qtySqm;
+                totalSqm -= qtySqm;
+              } else {
+                totalAdd += qtySqm;
+                totalSqm += qtySqm;
+              }
             }
 
             const wrapLess = (val: any) => {
@@ -127,11 +134,19 @@ export default function MeasurementPdf({ sheet }: { sheet: MeasurementSheet }) {
 
         <View style={styles.totalsBox}>
           <View style={styles.totalRow}>
-            <Text style={styles.totalLabel}>Total Area (Sq.M):</Text>
+            <Text style={styles.totalLabel}>Gross Area (Sq.M):</Text>
+            <Text style={styles.totalVal}>{totalAdd.toFixed(4)}</Text>
+          </View>
+          <View style={styles.totalRow}>
+            <Text style={styles.totalLabel}>Total Deductions:</Text>
+            <Text style={styles.totalVal}>- {totalLess.toFixed(4)}</Text>
+          </View>
+          <View style={[styles.totalRow, { marginTop: 5, paddingTop: 5, borderTopWidth: 1, borderTopColor: NAVY }]}>
+            <Text style={styles.totalLabel}>Net Area (Sq.M):</Text>
             <Text style={styles.totalVal}>{totalSqm.toFixed(4)}</Text>
           </View>
           <View style={styles.totalRow}>
-            <Text style={styles.totalLabel}>Total Area (Sq.Ft):</Text>
+            <Text style={styles.totalLabel}>Net Area (Sq.Ft):</Text>
             <Text style={styles.totalVal}>{(totalSqm * 10.7639).toFixed(4)}</Text>
           </View>
         </View>
