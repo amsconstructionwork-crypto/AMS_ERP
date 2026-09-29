@@ -56,8 +56,8 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
       for (let i = 0; i < items.length; i++) {
         const it = items[i];
         await sql(
-          `INSERT INTO measurement_items (measurement_id, position, particulars, no_of_items, length_mm, breadth_mm, depth_mm, remarks)
-           VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+          `INSERT INTO measurement_items (measurement_id, position, particulars, no_of_items, length_mm, breadth_mm, depth_mm, is_less, remarks)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
           [
             id,
             i,
@@ -66,6 +66,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
             Number(it.length_mm) || 0,
             Number(it.breadth_mm) || 0,
             Number(it.depth_mm) || 0,
+            Boolean(it.is_less),
             it.remarks || ''
           ]
         );

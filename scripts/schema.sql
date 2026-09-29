@@ -85,6 +85,7 @@ CREATE TABLE IF NOT EXISTS measurement_items (
   length_mm      NUMERIC(12,2) NOT NULL DEFAULT 0,
   breadth_mm     NUMERIC(12,2) NOT NULL DEFAULT 0,
   depth_mm       NUMERIC(12,2) NOT NULL DEFAULT 0,
+  is_less        BOOLEAN NOT NULL DEFAULT false,
   remarks        TEXT NOT NULL DEFAULT ''
 );
 

@@ -34,7 +34,9 @@ export default function MeasurementDetailPage() {
     let qty = 0;
     if (d > 0) qty = l * b * d * no;
     else qty = l * b * no;
-    totalSqm += qty;
+    
+    if (it.is_less) totalSqm -= qty;
+    else totalSqm += qty;
   });
 
   async function handleDelete() {
@@ -102,13 +104,18 @@ export default function MeasurementDetailPage() {
 
                 return (
                   <tr key={idx} className="hover:bg-navy/5">
-                    <td className="px-4 py-3">{idx + 1}</td>
-                    <td className="px-4 py-3 font-medium">{it.particulars}</td>
+                    <td className="px-4 py-3 text-navy/50">{idx + 1}</td>
+                    <td className="px-4 py-3 font-medium">
+                      {it.particulars}
+                      {it.is_less && <span className="ml-2 inline-flex items-center rounded-md bg-red-50 px-1.5 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">LESS</span>}
+                    </td>
                     <td className="px-4 py-3 text-center">{it.no_of_items}</td>
                     <td className="px-4 py-3 text-center text-navy/70">{it.length_mm || '-'}</td>
                     <td className="px-4 py-3 text-center text-navy/70">{it.breadth_mm || '-'}</td>
                     <td className="px-4 py-3 text-center text-navy/70">{it.depth_mm || '-'}</td>
-                    <td className="px-4 py-3 text-center font-mono text-orange bg-orange/5">{qty.toFixed(4)}</td>
+                    <td className={`px-4 py-3 text-center font-mono font-medium bg-orange/5 ${it.is_less ? 'text-red-500' : 'text-orange'}`}>
+                      {it.is_less && qty > 0 ? `(${qty.toFixed(4)})` : qty.toFixed(4)}
+                    </td>
                     <td className="px-4 py-3 text-navy/70">{it.remarks || '-'}</td>
                   </tr>
                 );

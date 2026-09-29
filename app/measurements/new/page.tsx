@@ -68,7 +68,12 @@ export default function NewMeasurementPage() {
     let qty = 0;
     if (d > 0) qty = l * b * d * no;
     else qty = l * b * no;
-    totalSqm += qty;
+    
+    if (it.is_less) {
+      totalSqm -= qty;
+    } else {
+      totalSqm += qty;
+    }
   });
 
   return (
@@ -148,6 +153,7 @@ export default function NewMeasurementPage() {
             <thead className="text-xs uppercase text-navy/60 border-b border-navy/10">
               <tr>
                 <th className="py-2 pr-2 font-semibold w-10">#</th>
+                <th className="py-2 px-2 font-semibold w-24">Type</th>
                 <th className="py-2 px-2 font-semibold">Particulars</th>
                 <th className="py-2 px-2 font-semibold w-16 text-center">No</th>
                 <th className="py-2 px-2 font-semibold w-24 text-center">Length</th>
@@ -170,6 +176,16 @@ export default function NewMeasurementPage() {
                   <tr key={idx} className="group">
                     <td className="py-2 pr-2 text-navy/40">{idx + 1}</td>
                     <td className="py-2 px-1">
+                      <select 
+                        value={it.is_less ? "less" : "add"} 
+                        onChange={e => updateItem(idx, "is_less", e.target.value === "less")}
+                        className={`w-full rounded p-1.5 outline-none font-medium text-xs uppercase ${it.is_less ? 'bg-red-50 text-red-600' : 'bg-green-50 text-green-700'}`}
+                      >
+                        <option value="add">Add (+)</option>
+                        <option value="less">Less (-)</option>
+                      </select>
+                    </td>
+                    <td className="py-2 px-1">
                       <input type="text" placeholder="Description..." value={it.particulars} onChange={e => updateItem(idx, "particulars", e.target.value)} className="w-full rounded bg-transparent p-1.5 border border-transparent hover:border-navy/20 focus:border-orange focus:bg-white outline-none transition-all" />
                     </td>
                     <td className="py-2 px-1">
@@ -184,8 +200,8 @@ export default function NewMeasurementPage() {
                     <td className="py-2 px-1">
                       <input type="number" min="0" value={it.depth_mm || ''} onChange={e => updateItem(idx, "depth_mm", e.target.value)} className="w-full rounded bg-[#FFF3EE] p-1.5 border border-transparent focus:border-orange focus:bg-white outline-none transition-all text-center" placeholder="0" />
                     </td>
-                    <td className="py-2 px-1 text-center font-mono font-medium text-orange bg-orange/5">
-                      {qty.toFixed(4)}
+                    <td className={`py-2 px-1 text-center font-mono font-medium bg-orange/5 ${it.is_less ? 'text-red-500' : 'text-orange'}`}>
+                      {it.is_less && qty > 0 ? `(${qty.toFixed(4)})` : qty.toFixed(4)}
                     </td>
                     <td className="py-2 px-1">
                       <input type="text" placeholder="Notes..." value={it.remarks} onChange={e => updateItem(idx, "remarks", e.target.value)} className="w-full rounded bg-transparent p-1.5 border border-transparent hover:border-navy/20 focus:border-orange focus:bg-white outline-none transition-all" />

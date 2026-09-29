@@ -61,6 +61,7 @@ export interface MeasurementItem {
   length_mm: number;
   breadth_mm: number;
   depth_mm: number;
+  is_less?: boolean;
   remarks: string;
 }
 

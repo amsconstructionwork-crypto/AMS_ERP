@@ -97,18 +97,28 @@ export default function MeasurementPdf({ sheet }: { sheet: MeasurementSheet }) {
               const d_m = Number(it.depth_mm) || 0;
               const num = Number(it.no_of_items) || 1;
               qtySqm = (d_m > 0 ? l_m * b_m * d_m : l_m * b_m) * num;
-              totalSqm += qtySqm;
+              
+              if (it.is_less) totalSqm -= qtySqm;
+              else totalSqm += qtySqm;
             }
+
+            const wrapLess = (val: any) => {
+              if (!hasData || !val) return "";
+              if (it.is_less) return `(${val})`;
+              return val;
+            };
 
             return (
               <View key={idx} style={styles.tRow}>
                 <Text style={[styles.colNo, styles.tdText]}>{hasData ? idx + 1 : ""}</Text>
                 <Text style={[styles.colParticulars, styles.tdText]}>{it.particulars}</Text>
                 <Text style={[styles.colItemNo, styles.tdText]}>{hasData ? it.no_of_items : ""}</Text>
-                <Text style={[styles.colL, styles.tdText]}>{hasData && it.length_mm ? it.length_mm : ""}</Text>
-                <Text style={[styles.colB, styles.tdText]}>{hasData && it.breadth_mm ? it.breadth_mm : ""}</Text>
-                <Text style={[styles.colD, styles.tdText]}>{hasData && it.depth_mm ? it.depth_mm : ""}</Text>
-                <Text style={[styles.colQty, styles.tdText]}>{hasData ? qtySqm.toFixed(4) : ""}</Text>
+                <Text style={[styles.colL, styles.tdText]}>{wrapLess(it.length_mm)}</Text>
+                <Text style={[styles.colB, styles.tdText]}>{wrapLess(it.breadth_mm)}</Text>
+                <Text style={[styles.colD, styles.tdText]}>{wrapLess(it.depth_mm)}</Text>
+                <Text style={[styles.colQty, styles.tdText, it.is_less ? { color: "#D32F2F" } : {}]}>
+                  {hasData && qtySqm > 0 ? (it.is_less ? `(${qtySqm.toFixed(4)})` : qtySqm.toFixed(4)) : ""}
+                </Text>
                 <Text style={[styles.colRemarks, styles.tdText]}>{it.remarks}</Text>
               </View>
             );
