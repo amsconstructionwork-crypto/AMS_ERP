@@ -86,11 +86,10 @@ const styles = StyleSheet.create({
   totalDivider: { borderTopWidth: 1, borderTopColor: BORDER, marginVertical: 8 },
 
   // Signature
-  signRow: { flexDirection: "row", justifyContent: "flex-end", marginTop: 60, paddingHorizontal: 30 },
-  signCol: { width: "40%", textAlign: "center" },
-  signLine: { borderTopWidth: 1, borderTopColor: "#94A3B8", marginBottom: 8, borderStyle: "dashed" },
-  signName: { fontSize: 10, fontWeight: "bold", color: NAVY },
-  signFor: { fontSize: 9, color: "#64748B", marginBottom: 40 }
+  signRow: { flexDirection: "row", justifyContent: "flex-end", marginTop: 50, paddingHorizontal: 30 },
+  signCol: { width: "35%", textAlign: "center", alignItems: "center" },
+  signFor: { fontSize: 11, fontWeight: "bold", color: NAVY, marginBottom: 50, textTransform: "uppercase" },
+  signName: { fontSize: 10, fontWeight: "bold", color: NAVY, borderTopWidth: 1, borderTopColor: NAVY, width: "100%", paddingTop: 6 }
 });
 
 export default function MeasurementPdf({ sheet }: { sheet: MeasurementSheet }) {
@@ -226,7 +225,6 @@ export default function MeasurementPdf({ sheet }: { sheet: MeasurementSheet }) {
         <View style={styles.signRow}>
           <View style={styles.signCol}>
             <Text style={styles.signFor}>For {sheet.company_name || 'Kedar Mandal'}</Text>
-            <View style={styles.signLine} />
             <Text style={styles.signName}>Authorized Signatory</Text>
           </View>
         </View>
@@ -281,7 +279,6 @@ export default function MeasurementPdf({ sheet }: { sheet: MeasurementSheet }) {
           <View style={styles.signRow}>
             <View style={styles.signCol}>
               <Text style={styles.signFor}>For {sheet.company_name || 'Kedar Mandal'}</Text>
-              <View style={styles.signLine} />
               <Text style={styles.signName}>Authorized Signatory</Text>
             </View>
           </View>
