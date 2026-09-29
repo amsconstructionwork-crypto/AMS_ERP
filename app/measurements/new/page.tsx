@@ -22,7 +22,7 @@ export default function NewMeasurementPage() {
     setItems([...items, { particulars: "", no_of_items: 1, length_mm: 0, breadth_mm: 0, depth_mm: 0, remarks: "" }]);
   }
 
-  function updateItem(index: number, field: keyof MeasurementItem, value: string | number) {
+  function updateItem(index: number, field: keyof MeasurementItem, value: string | number | boolean) {
     const newItems = [...items];
     newItems[index] = { ...newItems[index], [field]: value };
     setItems(newItems);
