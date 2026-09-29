@@ -105,6 +105,8 @@ export default function MeasurementDetailPage() {
                 const no = Number(it.no_of_items) || 1;
                 const qty = d > 0 ? l * b * d * no : l * b * no;
 
+                const formatVal = (val: any) => val ? Number(val).toFixed(3) : '-';
+
                 return (
                   <tr key={idx} className="hover:bg-navy/5">
                     <td className="px-4 py-3 text-navy/50">{idx + 1}</td>
@@ -113,9 +115,9 @@ export default function MeasurementDetailPage() {
                       {it.is_less && <span className="ml-2 inline-flex items-center rounded-md bg-red-50 px-1.5 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">LESS</span>}
                     </td>
                     <td className="px-4 py-3 text-center">{it.no_of_items}</td>
-                    <td className="px-4 py-3 text-center text-navy/70">{it.length_mm || '-'}</td>
-                    <td className="px-4 py-3 text-center text-navy/70">{it.breadth_mm || '-'}</td>
-                    <td className="px-4 py-3 text-center text-navy/70">{it.depth_mm || '-'}</td>
+                    <td className="px-4 py-3 text-center text-navy/70">{formatVal(it.length_mm)}</td>
+                    <td className="px-4 py-3 text-center text-navy/70">{formatVal(it.breadth_mm)}</td>
+                    <td className="px-4 py-3 text-center text-navy/70">{formatVal(it.depth_mm)}</td>
                     <td className={`px-4 py-3 text-center font-mono font-medium bg-orange/5 ${it.is_less ? 'text-red-500' : 'text-orange'}`}>
                       {it.is_less && qty > 0 ? `(${qty.toFixed(4)})` : qty.toFixed(4)}
                     </td>

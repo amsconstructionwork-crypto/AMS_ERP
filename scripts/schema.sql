@@ -81,10 +81,10 @@ CREATE TABLE IF NOT EXISTS measurement_items (
   measurement_id INTEGER NOT NULL REFERENCES measurements(id) ON DELETE CASCADE,
   position       INTEGER NOT NULL DEFAULT 0,
   particulars    TEXT NOT NULL DEFAULT '',
-  no_of_items    NUMERIC(12,2) NOT NULL DEFAULT 1,
-  length_mm      NUMERIC(12,2) NOT NULL DEFAULT 0,
-  breadth_mm     NUMERIC(12,2) NOT NULL DEFAULT 0,
-  depth_mm       NUMERIC(12,2) NOT NULL DEFAULT 0,
+  no_of_items    NUMERIC(12,3) NOT NULL DEFAULT 1,
+  length_mm      NUMERIC(12,3) NOT NULL DEFAULT 0,
+  breadth_mm     NUMERIC(12,3) NOT NULL DEFAULT 0,
+  depth_mm       NUMERIC(12,3) NOT NULL DEFAULT 0,
   is_less        BOOLEAN NOT NULL DEFAULT false,
   remarks        TEXT NOT NULL DEFAULT ''
 );

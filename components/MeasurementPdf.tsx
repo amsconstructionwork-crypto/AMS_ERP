@@ -110,9 +110,10 @@ export default function MeasurementPdf({ sheet }: { sheet: MeasurementSheet }) {
             }
 
             const wrapLess = (val: any) => {
-              if (!hasData || !val) return "";
-              if (it.is_less) return `(${val})`;
-              return val;
+              if (!hasData || val === "" || val === null || val === undefined || val === 0) return "";
+              const formatted = Number(val).toFixed(3);
+              if (it.is_less) return `(${formatted})`;
+              return formatted;
             };
 
             return (
