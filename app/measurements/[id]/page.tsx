@@ -145,7 +145,39 @@ export default function MeasurementDetailPage() {
             </tbody>
           </table>
         </div>
+        </div>
       </div>
+
+      {sheet.summary_items && sheet.summary_items.length > 0 && (
+        <div className="rounded-xl border border-navy/10 bg-white shadow-sm overflow-hidden mt-6">
+          <div className="bg-navy/5 px-6 py-4 border-b border-navy/10">
+            <h2 className="text-lg font-semibold text-navy">Abstract / Summary Items</h2>
+          </div>
+          
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-navy/5 text-xs uppercase text-navy/60 border-b border-navy/10">
+                <tr>
+                  <th className="px-4 py-3 font-semibold w-12">#</th>
+                  <th className="px-4 py-3 font-semibold">Particulars / Description</th>
+                  <th className="px-4 py-3 font-semibold w-40 text-center">Quantity</th>
+                  <th className="px-4 py-3 font-semibold w-32 text-center">Unit</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-navy/5">
+                {sheet.summary_items.map((it, idx) => (
+                  <tr key={`sum-${idx}`} className="hover:bg-navy/5">
+                    <td className="px-4 py-3 text-navy/50">{idx + 1}</td>
+                    <td className="px-4 py-3 font-medium">{it.particulars}</td>
+                    <td className="px-4 py-3 text-center font-mono text-orange font-medium">{Number(it.qty).toFixed(3)}</td>
+                    <td className="px-4 py-3 text-center text-navy/70">{it.unit}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
 
       <div className="flex justify-end">
         <div className="w-full md:w-1/3 rounded-xl border border-navy/10 bg-navy text-white p-6 shadow-md space-y-3">

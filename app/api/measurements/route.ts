@@ -29,13 +29,14 @@ export async function POST(req: Request) {
       name_of_work,
       item,
       date,
-      items // Array of measurement_items
+      items, // Array of measurement_items
+      summary_items // Array of summary_items
     } = body;
 
     const result = await sql(
-      `INSERT INTO measurements (sheet_number, company_name, name_of_work, item, date)
-       VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-      [sheet_number, company_name || 'KEDAR MANDAL', name_of_work || '', item || '', date || new Date().toISOString().split('T')[0]]
+      `INSERT INTO measurements (sheet_number, company_name, name_of_work, item, date, summary_items)
+       VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+      [sheet_number, company_name || 'KEDAR MANDAL', name_of_work || '', item || '', date || new Date().toISOString().split('T')[0], JSON.stringify(summary_items || [])]
     );
 
     const sheetId = result[0].id;

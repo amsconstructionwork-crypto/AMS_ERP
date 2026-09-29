@@ -18,6 +18,10 @@ export default function NewMeasurementPage() {
     { particulars: "", no_of_items: 1, length_mm: 0, breadth_mm: 0, depth_mm: 0, remarks: "" }
   ]);
 
+  const [summaryItems, setSummaryItems] = useState<{particulars: string, qty: number, unit: string}[]>([
+    { particulars: "", qty: 0, unit: "Sq.M" }
+  ]);
+
   function addItem() {
     setItems([...items, { particulars: "", no_of_items: 1, length_mm: 0, breadth_mm: 0, depth_mm: 0, remarks: "" }]);
   }
@@ -32,6 +36,20 @@ export default function NewMeasurementPage() {
     setItems(items.filter((_, i) => i !== index));
   }
 
+  function addSummaryItem() {
+    setSummaryItems([...summaryItems, { particulars: "", qty: 0, unit: "Sq.M" }]);
+  }
+
+  function updateSummaryItem(index: number, field: string, value: string | number) {
+    const newItems = [...summaryItems];
+    newItems[index] = { ...newItems[index], [field]: value };
+    setSummaryItems(newItems);
+  }
+
+  function removeSummaryItem(index: number) {
+    setSummaryItems(summaryItems.filter((_, i) => i !== index));
+  }
+
   async function handleSave() {
     setSaving(true);
     try {
@@ -43,7 +61,8 @@ export default function NewMeasurementPage() {
           date,
           name_of_work: nameOfWork,
           item,
-          items: items.filter(it => it.particulars || it.length_mm > 0)
+          items: items.filter(it => it.particulars || it.length_mm > 0),
+          summary_items: summaryItems.filter(it => it.particulars || it.qty > 0)
         })
       });
 
@@ -235,6 +254,77 @@ export default function NewMeasurementPage() {
           </table>
           <button onClick={addItem} className="mt-4 text-sm font-medium text-navy/60 hover:text-navy border border-dashed border-navy/20 w-full py-2 rounded-md hover:border-navy/40 transition-colors">
             + Add Another Row
+          </button>
+        </div>
+      {/* SUMMARY SECTION */}
+      <div className="rounded-xl border border-navy/10 bg-white p-6 shadow-sm space-y-4">
+        <div className="flex justify-between items-center border-b border-navy/10 pb-2">
+          <h2 className="text-lg font-semibold text-navy">Abstract / Summary Items</h2>
+          <button onClick={addSummaryItem} className="text-sm font-medium text-orange hover:underline">+ Add Summary Row</button>
+        </div>
+        
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-sm">
+            <thead className="text-xs uppercase text-navy/60 border-b border-navy/10">
+              <tr>
+                <th className="py-2 pr-2 font-semibold w-10">#</th>
+                <th className="py-2 px-2 font-semibold">Particulars / Description</th>
+                <th className="py-2 px-2 font-semibold w-40 text-center">Quantity</th>
+                <th className="py-2 px-2 font-semibold w-40 text-center">Unit</th>
+                <th className="py-2 pl-2 font-semibold w-10"></th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-navy/5">
+              {summaryItems.map((it, idx) => (
+                <tr key={`sum-${idx}`} className="group">
+                  <td className="py-2 pr-2 text-navy/40">{idx + 1}</td>
+                  <td className="py-2 px-1">
+                    <input 
+                      type="text" 
+                      placeholder="Summary description..." 
+                      value={it.particulars} 
+                      onChange={e => updateSummaryItem(idx, "particulars", e.target.value)} 
+                      className="w-full rounded bg-transparent p-1.5 border border-transparent hover:border-navy/20 focus:border-orange focus:bg-white outline-none transition-all" 
+                    />
+                  </td>
+                  <td className="py-2 px-1">
+                    <input 
+                      type="number" 
+                      min="0" 
+                      step="0.001"
+                      value={it.qty || ''} 
+                      onChange={e => updateSummaryItem(idx, "qty", Number(e.target.value))} 
+                      className="w-full rounded bg-[#FFF3EE] p-1.5 border border-transparent focus:border-orange focus:bg-white outline-none transition-all text-center font-mono" 
+                      placeholder="0.000" 
+                    />
+                  </td>
+                  <td className="py-2 px-1">
+                    <select 
+                      value={it.unit} 
+                      onChange={e => updateSummaryItem(idx, "unit", e.target.value)}
+                      className="w-full rounded bg-transparent p-1.5 border border-transparent hover:border-navy/20 focus:border-orange focus:bg-white outline-none transition-all text-center"
+                    >
+                      <option value="Sq.M">Sq.M</option>
+                      <option value="Sq.Ft">Sq.Ft</option>
+                      <option value="R.M">R.M</option>
+                      <option value="R.Ft">R.Ft</option>
+                      <option value="Cu.M">Cu.M</option>
+                      <option value="Cu.Ft">Cu.Ft</option>
+                      <option value="Nos">Nos</option>
+                      <option value="Lumpsum">Lumpsum</option>
+                    </select>
+                  </td>
+                  <td className="py-2 pl-2">
+                    <button onClick={() => removeSummaryItem(idx)} className="text-red-500 opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-red-50 rounded" title="Remove row">
+                      ✕
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <button onClick={addSummaryItem} className="mt-4 text-sm font-medium text-navy/60 hover:text-navy border border-dashed border-navy/20 w-full py-2 rounded-md hover:border-navy/40 transition-colors">
+            + Add Another Summary Row
           </button>
         </div>
       </div>

@@ -73,6 +73,7 @@ CREATE TABLE IF NOT EXISTS measurements (
   name_of_work   TEXT NOT NULL DEFAULT '',
   item           TEXT NOT NULL DEFAULT '',
   date           DATE NOT NULL DEFAULT CURRENT_DATE,
+  summary_items  JSONB NOT NULL DEFAULT '[]'::jsonb,
   created_at     TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 

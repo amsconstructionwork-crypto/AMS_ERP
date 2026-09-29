@@ -43,11 +43,11 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 
     const sql = requireDb();
     const body = await req.json();
-    const { company_name, name_of_work, item, date, items } = body;
+    const { company_name, name_of_work, item, date, items, summary_items } = body;
 
     await sql(
-      `UPDATE measurements SET company_name=$1, name_of_work=$2, item=$3, date=$4 WHERE id=$5`,
-      [company_name || 'KEDAR MANDAL', name_of_work, item, date, id]
+      `UPDATE measurements SET company_name=$1, name_of_work=$2, item=$3, date=$4, summary_items=$5 WHERE id=$6`,
+      [company_name || 'KEDAR MANDAL', name_of_work, item, date, JSON.stringify(summary_items || []), id]
     );
 
     await sql(`DELETE FROM measurement_items WHERE measurement_id = $1`, [id]);

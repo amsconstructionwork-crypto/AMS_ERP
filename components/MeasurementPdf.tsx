@@ -171,67 +171,48 @@ export default function MeasurementPdf({ sheet }: { sheet: MeasurementSheet }) {
         </View>
       </Page>
 
-      {/* SUMMARY PAGE */}
-      <Page size="A4" style={styles.page}>
-        <View style={[styles.header, { justifyContent: 'center', marginBottom: 40 }]}>
-          <Text style={[styles.headerTitle, { fontSize: 20, textDecoration: 'underline' }]}>ABSTRACT / SUMMARY</Text>
-        </View>
-
-        <View style={styles.metaRow}>
-          <Text style={[styles.metaLabel, { width: 120, fontSize: 12, fontWeight: 'bold' }]}>Name of Work:</Text>
-          <Text style={[styles.metaValue, { fontSize: 12 }]}>{sheet.name_of_work}</Text>
-        </View>
-        <View style={[styles.metaRow, { marginBottom: 30 }]}>
-          <Text style={[styles.metaLabel, { width: 120, fontSize: 12, fontWeight: 'bold' }]}>Particular (Item):</Text>
-          <Text style={[styles.metaValue, { fontSize: 12 }]}>{sheet.item}</Text>
-        </View>
-
-        <View style={[styles.table, { marginTop: 0 }]}>
-          <View style={[styles.tHeadRow, { backgroundColor: '#f0f0f0' }]}>
-            <Text style={[styles.colNo, styles.thText, { width: '10%' }]}>S.No</Text>
-            <Text style={[styles.colParticulars, styles.thText, { width: '50%' }]}>Description</Text>
-            <Text style={[styles.colQty, styles.thText, { width: '20%' }]}>Quantity</Text>
-            <Text style={[styles.colRemarks, styles.thText, { width: '20%' }]}>Unit</Text>
+      {/* SUMMARY PAGE (Manual Abstract) */}
+      {sheet.summary_items && sheet.summary_items.length > 0 && (
+        <Page size="A4" style={styles.page}>
+          <View style={[styles.header, { justifyContent: 'center', marginBottom: 40 }]}>
+            <Text style={[styles.headerTitle, { fontSize: 20, textDecoration: 'underline' }]}>ABSTRACT / SUMMARY</Text>
           </View>
 
-          <View style={styles.tRow}>
-            <Text style={[styles.colNo, styles.tdText, { width: '10%' }]}>1</Text>
-            <Text style={[styles.colParticulars, styles.tdText, { width: '50%' }]}>{sheet.item} (Area)</Text>
-            <Text style={[styles.colQty, styles.tdText, { width: '20%' }]}>{(totalAddSqm - totalLessSqm).toFixed(3)}</Text>
-            <Text style={[styles.colRemarks, styles.tdText, { width: '20%' }]}>Sq.M</Text>
+          <View style={styles.metaRow}>
+            <Text style={[styles.metaLabel, { width: 120, fontSize: 12, fontWeight: 'bold' }]}>Name of Work:</Text>
+            <Text style={[styles.metaValue, { fontSize: 12 }]}>{sheet.name_of_work}</Text>
           </View>
-          <View style={styles.tRow}>
-            <Text style={[styles.colNo, styles.tdText, { width: '10%' }]}>2</Text>
-            <Text style={[styles.colParticulars, styles.tdText, { width: '50%' }]}>{sheet.item} (Area)</Text>
-            <Text style={[styles.colQty, styles.tdText, { width: '20%', fontWeight: 'bold' }]}>{((totalAddSqm - totalLessSqm) * 10.7639).toFixed(3)}</Text>
-            <Text style={[styles.colRemarks, styles.tdText, { width: '20%', fontWeight: 'bold' }]}>Sq.Ft</Text>
+          <View style={[styles.metaRow, { marginBottom: 30 }]}>
+            <Text style={[styles.metaLabel, { width: 120, fontSize: 12, fontWeight: 'bold' }]}>Item:</Text>
+            <Text style={[styles.metaValue, { fontSize: 12 }]}>{sheet.item}</Text>
           </View>
 
-          {(totalAddRm - totalLessRm) > 0 && (
-            <>
-              <View style={styles.tRow}>
-                <Text style={[styles.colNo, styles.tdText, { width: '10%' }]}>3</Text>
-                <Text style={[styles.colParticulars, styles.tdText, { width: '50%' }]}>{sheet.item} (Running)</Text>
-                <Text style={[styles.colQty, styles.tdText, { width: '20%' }]}>{(totalAddRm - totalLessRm).toFixed(3)}</Text>
-                <Text style={[styles.colRemarks, styles.tdText, { width: '20%' }]}>R.M</Text>
+          <View style={[styles.table, { marginTop: 0 }]}>
+            <View style={[styles.tHeadRow, { backgroundColor: '#f0f0f0' }]}>
+              <Text style={[styles.colNo, styles.thText, { width: '10%' }]}>S.No</Text>
+              <Text style={[styles.colParticulars, styles.thText, { width: '50%' }]}>Particulars / Description</Text>
+              <Text style={[styles.colQty, styles.thText, { width: '20%' }]}>Quantity</Text>
+              <Text style={[styles.colRemarks, styles.thText, { width: '20%' }]}>Unit</Text>
+            </View>
+
+            {sheet.summary_items.map((sumItem, sIdx) => (
+              <View key={`sum-${sIdx}`} style={styles.tRow}>
+                <Text style={[styles.colNo, styles.tdText, { width: '10%' }]}>{sIdx + 1}</Text>
+                <Text style={[styles.colParticulars, styles.tdText, { width: '50%' }]}>{sumItem.particulars}</Text>
+                <Text style={[styles.colQty, styles.tdText, { width: '20%' }]}>{Number(sumItem.qty).toFixed(3)}</Text>
+                <Text style={[styles.colRemarks, styles.tdText, { width: '20%' }]}>{sumItem.unit}</Text>
               </View>
-              <View style={styles.tRow}>
-                <Text style={[styles.colNo, styles.tdText, { width: '10%' }]}>4</Text>
-                <Text style={[styles.colParticulars, styles.tdText, { width: '50%' }]}>{sheet.item} (Running)</Text>
-                <Text style={[styles.colQty, styles.tdText, { width: '20%', fontWeight: 'bold' }]}>{((totalAddRm - totalLessRm) * 3.28084).toFixed(3)}</Text>
-                <Text style={[styles.colRemarks, styles.tdText, { width: '20%', fontWeight: 'bold' }]}>R.Ft</Text>
-              </View>
-            </>
-          )}
-        </View>
-        
-        <View style={styles.signRow}>
-          <View style={{ flex: 1 }} />
-          <View style={styles.signCol}>
-            <Text style={styles.signName}>{sheet.company_name || 'Kedar Mandal'}</Text>
+            ))}
           </View>
-        </View>
-      </Page>
+          
+          <View style={styles.signRow}>
+            <View style={{ flex: 1 }} />
+            <View style={styles.signCol}>
+              <Text style={styles.signName}>{sheet.company_name || 'Kedar Mandal'}</Text>
+            </View>
+          </View>
+        </Page>
+      )}
     </Document>
   );
 }

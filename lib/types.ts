@@ -65,6 +65,12 @@ export interface MeasurementItem {
   remarks: string;
 }
 
+export interface SummaryItem {
+  particulars: string;
+  qty: number;
+  unit: string;
+}
+
 export interface MeasurementSheet {
   id: number;
   sheet_number: string;
@@ -74,4 +80,5 @@ export interface MeasurementSheet {
   date: string;
   created_at: string;
   items: MeasurementItem[];
+  summary_items: SummaryItem[];
 }
