@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 
 export default function ShareButtons({
   docNumber,
@@ -17,6 +18,8 @@ export default function ShareButtons({
   grandTotal: string;
   id: number;
 }) {
+  const [isSending, setIsSending] = useState(false);
+
   function pdfUrl() {
     const origin = typeof window !== "undefined" ? window.location.origin : "";
     return `${origin}/api/quotations/${id}/pdf`;
@@ -33,32 +36,54 @@ export default function ShareButtons({
     window.open(url, "_blank");
   }
 
-  function shareEmail() {
-    const label = docType === "bill" ? "Bill" : "Quotation";
-    const subject = `AMS Civil Construction — ${label} ${docNumber}`;
-    const body =
-      `Dear ${clientName || "Valued Client"},\n\n` +
-      `Please find your ${label} (${docNumber}) from AMS Civil Construction attached below.\n` +
-      `Grand Total: ₹${grandTotal}\n\n` +
-      `📄 View / Download your document here: ${pdfUrl()}\n\n` +
-      `Thank you for choosing AMS Civil Construction. We look forward to providing you with the highest quality of service.\n\n` +
-      `Best Regards,\n\n` +
-      `=========================================\n` +
-      `🏗️ AMS CIVIL CONSTRUCTION\n` +
-      `Mumbai's Trusted Construction Partner\n` +
-      `Bungalow Construction | Renovation | Interior | Waterproofing\n` +
-      `=========================================\n\n` +
-      `🔗 CONNECT WITH US:\n` +
-      `🌍 Website:    https://www.amscivilwork.in\n` +
-      `📸 Instagram:  https://www.instagram.com/amscivilwork/\n` +
-      `👍 Facebook:   https://www.facebook.com/profile.php?id=61570712849063\n` +
-      `⭐ Reviews:    https://share.google/2MVNrHEWCCTqYsU3O\n\n` +
-      `📞 Contact:    +91 87793 91690 | +91 90042 98911\n` +
-      `📧 Email:      ams.constructionwork@gmail.com\n` +
-      `=========================================`;
-      
-    const url = `mailto:${clientEmail || ""}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = url;
+  async function shareEmail() {
+    if (!clientEmail) {
+      alert("Please provide a client email address in the quotation details first.");
+      return;
+    }
+
+    setIsSending(true);
+    try {
+      const htmlBody = `
+        <div style="font-family: sans-serif; color: #333;">
+          <p>Dear ${clientName || "Valued Client"},</p>
+          <p>Please find your ${docType === "bill" ? "Bill" : "Quotation"} (${docNumber}) from <strong>AMS Civil Construction</strong> attached to this email.</p>
+          <p><strong>Grand Total: ₹${grandTotal}</strong></p>
+          <p>Thank you for choosing AMS Civil Construction. We look forward to providing you with the highest quality of service.</p>
+          <br/>
+          <p>Best Regards,</p>
+          <div style="border-top: 2px solid #F26430; padding-top: 15px; margin-top: 15px;">
+            <h3 style="margin: 0; color: #0F2138;">AMS CIVIL CONSTRUCTION</h3>
+            <p style="margin: 4px 0; font-size: 14px; color: #555;">Mumbai's Trusted Construction Partner</p>
+            <p style="margin: 4px 0; font-size: 13px; color: #777;">Bungalow Construction | Renovation | Interior | Waterproofing</p>
+            <br/>
+            <p style="margin: 3px 0;">🌐 <a href="https://www.amscivilwork.in" style="color: #0F2138; text-decoration: none;">www.amscivilwork.in</a></p>
+            <p style="margin: 3px 0;">📸 <a href="https://www.instagram.com/amscivilwork/" style="color: #0F2138; text-decoration: none;">Instagram Profile</a></p>
+            <p style="margin: 3px 0;">👍 <a href="https://www.facebook.com/profile.php?id=61570712849063" style="color: #0F2138; text-decoration: none;">Facebook Page</a></p>
+            <p style="margin: 3px 0;">⭐ <a href="https://share.google/2MVNrHEWCCTqYsU3O" style="color: #0F2138; text-decoration: none;">Google Reviews</a></p>
+            <br/>
+            <p style="margin: 3px 0; font-weight: bold;">📞 +91 87793 91690 | +91 90042 98911</p>
+            <p style="margin: 3px 0;">📧 ams.constructionwork@gmail.com</p>
+          </div>
+        </div>
+      `;
+
+      const res = await fetch(`/api/quotations/${id}/email`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ to: clientEmail, html: htmlBody })
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to send email");
+      }
+      alert("Email sent successfully with the PDF attached!");
+    } catch (err: any) {
+      console.error(err);
+      alert(err.message || "Failed to send email");
+    } finally {
+      setIsSending(false);
+    }
   }
 
   function downloadPdf() {
@@ -84,9 +109,10 @@ export default function ShareButtons({
       </button>
       <button 
         onClick={shareEmail} 
-        className="flex h-[38px] items-center justify-center rounded-md bg-orange px-4 text-sm font-medium text-white hover:bg-orange/90 w-full sm:w-auto transition-colors"
+        disabled={isSending}
+        className="flex h-[38px] items-center justify-center rounded-md bg-orange px-4 text-sm font-medium text-white hover:bg-orange/90 w-full sm:w-auto transition-colors disabled:opacity-50"
       >
-        ✉ Share via Email
+        {isSending ? "⏳ Sending..." : "✉ Share via Email"}
       </button>
     </div>
   );
