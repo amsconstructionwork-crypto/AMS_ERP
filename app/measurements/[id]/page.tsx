@@ -145,7 +145,6 @@ export default function MeasurementDetailPage() {
             </tbody>
           </table>
         </div>
-        </div>
       </div>
 
       {sheet.summary_items && sheet.summary_items.length > 0 && (

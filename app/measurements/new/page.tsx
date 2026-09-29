@@ -256,6 +256,7 @@ export default function NewMeasurementPage() {
             + Add Another Row
           </button>
         </div>
+      </div>
       {/* SUMMARY SECTION */}
       <div className="rounded-xl border border-navy/10 bg-white p-6 shadow-sm space-y-4">
         <div className="flex justify-between items-center border-b border-navy/10 pb-2">
