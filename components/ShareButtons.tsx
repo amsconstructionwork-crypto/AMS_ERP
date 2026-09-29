@@ -41,7 +41,15 @@ export default function ShareButtons({
       `Please find your ${label} (${docNumber}) from AMS Civil Construction.\n` +
       `Grand Total: ₹${grandTotal}\n\n` +
       `You can view/download it here: ${pdfUrl()}\n\n` +
-      `Thank you,\nAMS Civil Construction`;
+      `Best Regards,\n` +
+      `AMS Civil Construction\n` +
+      `Bungalow Construction | Renovation | Interior Civil Work | Waterproofing\n\n` +
+      `🌐 Website: https://www.amscivilwork.in\n` +
+      `📸 Instagram: https://www.instagram.com/amscivilwork/\n` +
+      `👍 Facebook: https://www.facebook.com/profile.php?id=61570712849063\n` +
+      `⭐ Google Reviews: https://share.google/2MVNrHEWCCTqYsU3O\n\n` +
+      `📞 +91 87793 91690 / +91 90042 98911\n` +
+      `📧 ams.constructionwork@gmail.com`;
     const url = `mailto:${clientEmail || ""}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.location.href = url;
   }
