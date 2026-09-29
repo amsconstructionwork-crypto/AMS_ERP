@@ -25,6 +25,7 @@ export async function POST(req: Request) {
     const sheet_number = `AMS-MS-${padded}`;
 
     const {
+      company_name,
       name_of_work,
       item,
       date,
@@ -32,9 +33,9 @@ export async function POST(req: Request) {
     } = body;
 
     const result = await sql(
-      `INSERT INTO measurements (sheet_number, name_of_work, item, date)
-       VALUES ($1, $2, $3, $4) RETURNING *`,
-      [sheet_number, name_of_work || '', item || '', date || new Date().toISOString().split('T')[0]]
+      `INSERT INTO measurements (sheet_number, company_name, name_of_work, item, date)
+       VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+      [sheet_number, company_name || 'KEDAR MANDAL', name_of_work || '', item || '', date || new Date().toISOString().split('T')[0]]
     );
 
     const sheetId = result[0].id;

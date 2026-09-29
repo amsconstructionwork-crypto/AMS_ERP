@@ -10,6 +10,7 @@ export default function NewMeasurementPage() {
   const [saving, setSaving] = useState(false);
   
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+  const [companyName, setCompanyName] = useState("");
   const [nameOfWork, setNameOfWork] = useState("");
   const [item, setItem] = useState("");
   
@@ -38,6 +39,7 @@ export default function NewMeasurementPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          company_name: companyName,
           date,
           name_of_work: nameOfWork,
           item,
@@ -92,7 +94,17 @@ export default function NewMeasurementPage() {
 
       <div className="rounded-xl border border-navy/10 bg-white p-6 shadow-sm space-y-4">
         <h2 className="text-lg font-semibold text-navy border-b border-navy/10 pb-2">General Details</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div>
+            <label className="mb-1 block text-xs font-semibold text-navy/70 uppercase tracking-wider">Heading / Name</label>
+            <input 
+              type="text" 
+              placeholder="e.g. KEDAR MANDAL"
+              value={companyName} 
+              onChange={e => setCompanyName(e.target.value)} 
+              className="w-full rounded-md border border-navy/20 p-2.5 text-sm outline-none focus:border-orange focus:ring-1 focus:ring-orange/50 transition-all"
+            />
+          </div>
           <div>
             <label className="mb-1 block text-xs font-semibold text-navy/70 uppercase tracking-wider">Date</label>
             <input 

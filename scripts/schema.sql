@@ -69,6 +69,7 @@ CREATE TABLE IF NOT EXISTS site_payments (
 CREATE TABLE IF NOT EXISTS measurements (
   id             SERIAL PRIMARY KEY,
   sheet_number   TEXT NOT NULL UNIQUE,
+  company_name   TEXT NOT NULL DEFAULT 'KEDAR MANDAL',
   name_of_work   TEXT NOT NULL DEFAULT '',
   item           TEXT NOT NULL DEFAULT '',
   date           DATE NOT NULL DEFAULT CURRENT_DATE,

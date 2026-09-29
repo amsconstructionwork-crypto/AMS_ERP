@@ -67,6 +67,7 @@ export interface MeasurementItem {
 export interface MeasurementSheet {
   id: number;
   sheet_number: string;
+  company_name: string;
   name_of_work: string;
   item: string;
   date: string;

@@ -57,7 +57,7 @@ export default function MeasurementPdf({ sheet }: { sheet: MeasurementSheet }) {
       <Page size="A4" style={styles.page}>
         
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>KEDAR MANDAL</Text>
+          <Text style={styles.headerTitle}>{sheet.company_name || 'KEDAR MANDAL'}</Text>
           <View style={styles.headerRight}>
             <Text style={{ marginBottom: 15, fontSize: 14 }}>Measurement Form</Text>
             <Text>No. {sheet.sheet_number}</Text>
@@ -129,7 +129,7 @@ export default function MeasurementPdf({ sheet }: { sheet: MeasurementSheet }) {
         <View style={styles.signRow}>
           <View style={{ flex: 1 }} />
           <View style={styles.signCol}>
-            <Text style={styles.signName}>Kedar Mandal</Text>
+            <Text style={styles.signName}>{sheet.company_name || 'Kedar Mandal'}</Text>
           </View>
         </View>
       </Page>
