@@ -45,10 +45,15 @@ export default function ShareButtons({
     setIsSending(true);
     try {
       const htmlBody = `
-        <div style="font-family: sans-serif; color: #333;">
+        <div style="font-family: sans-serif; color: #333; max-width: 600px;">
           <p>Dear ${clientName || "Valued Client"},</p>
           <p>Please find your ${docType === "bill" ? "Bill" : "Quotation"} (${docNumber}) from <strong>AMS Civil Construction</strong> attached to this email.</p>
           <p><strong>Grand Total: ₹${grandTotal}</strong></p>
+          <br/>
+          <div style="text-align: left; margin: 15px 0;">
+            <a href="${pdfUrl()}" style="display: inline-block; padding: 12px 24px; background-color: #F26430; color: #ffffff; text-decoration: none; font-weight: bold; border-radius: 6px; font-size: 15px;">📥 View / Download Document</a>
+          </div>
+          <br/>
           <p>Thank you for choosing AMS Civil Construction. We look forward to providing you with the highest quality of service.</p>
           <br/>
           <p>Best Regards,</p>
