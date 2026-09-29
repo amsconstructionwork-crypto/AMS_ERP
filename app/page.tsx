@@ -146,8 +146,7 @@ function Card({ title, value, icon, color }: { title: string; value: string; ico
       <div className="min-w-0 flex-1">
         <p className="text-sm font-medium text-navy/60 truncate">{title}</p>
         <p 
-          title={value}
-          className={`mt-1 font-sans text-xl md:text-2xl font-bold tracking-tight truncate ${isOrange ? "text-orange" : "text-navy"}`}
+          className={`mt-1 font-sans text-lg xl:text-xl font-bold tracking-tight ${isOrange ? "text-orange" : "text-navy"}`}
         >
           {value}
         </p>
