@@ -59,9 +59,9 @@ export default function NewMeasurementPage() {
   // Calculate live totals
   let totalSqm = 0;
   items.forEach(it => {
-    const l = (Number(it.length_mm) || 0) / 1000;
-    const b = (Number(it.breadth_mm) || 0) / 1000;
-    const d = (Number(it.depth_mm) || 0) / 1000;
+    const l = Number(it.length_mm) || 0;
+    const b = Number(it.breadth_mm) || 0;
+    const d = Number(it.depth_mm) || 0;
     const no = Number(it.no_of_items) || 1;
     let qty = 0;
     if (d > 0) qty = l * b * d * no;
@@ -138,9 +138,9 @@ export default function NewMeasurementPage() {
                 <th className="py-2 pr-2 font-semibold w-10">#</th>
                 <th className="py-2 px-2 font-semibold">Particulars</th>
                 <th className="py-2 px-2 font-semibold w-16 text-center">No</th>
-                <th className="py-2 px-2 font-semibold w-24 text-center">L (mm)</th>
-                <th className="py-2 px-2 font-semibold w-24 text-center">B (mm)</th>
-                <th className="py-2 px-2 font-semibold w-24 text-center">D (mm)</th>
+                <th className="py-2 px-2 font-semibold w-24 text-center">Length</th>
+                <th className="py-2 px-2 font-semibold w-24 text-center">Breadth</th>
+                <th className="py-2 px-2 font-semibold w-24 text-center">Depth</th>
                 <th className="py-2 px-2 font-semibold w-28 text-center bg-orange/5 rounded-t-md">Qty (Sqm)</th>
                 <th className="py-2 px-2 font-semibold">Remarks</th>
                 <th className="py-2 pl-2 font-semibold w-10"></th>
@@ -148,9 +148,9 @@ export default function NewMeasurementPage() {
             </thead>
             <tbody className="divide-y divide-navy/5">
               {items.map((it, idx) => {
-                const l = (Number(it.length_mm) || 0) / 1000;
-                const b = (Number(it.breadth_mm) || 0) / 1000;
-                const d = (Number(it.depth_mm) || 0) / 1000;
+                const l = Number(it.length_mm) || 0;
+                const b = Number(it.breadth_mm) || 0;
+                const d = Number(it.depth_mm) || 0;
                 const no = Number(it.no_of_items) || 1;
                 const qty = d > 0 ? l * b * d * no : l * b * no;
 

@@ -81,9 +81,9 @@ export default function MeasurementPdf({ sheet }: { sheet: MeasurementSheet }) {
             <Text style={[styles.colNo, styles.thText]}>No</Text>
             <Text style={[styles.colParticulars, styles.thText]}>Particulars</Text>
             <Text style={[styles.colItemNo, styles.thText]}>No</Text>
-            <Text style={[styles.colL, styles.thText]}>Length (mm)</Text>
-            <Text style={[styles.colB, styles.thText]}>Breadth (mm)</Text>
-            <Text style={[styles.colD, styles.thText]}>Depth (mm)</Text>
+            <Text style={[styles.colL, styles.thText]}>Length</Text>
+            <Text style={[styles.colB, styles.thText]}>Breadth</Text>
+            <Text style={[styles.colD, styles.thText]}>Depth</Text>
             <Text style={[styles.colQty, styles.thText]}>Quantity</Text>
             <Text style={[styles.colRemarks, styles.thText]}>Remarks</Text>
           </View>
@@ -92,9 +92,9 @@ export default function MeasurementPdf({ sheet }: { sheet: MeasurementSheet }) {
             const hasData = it.particulars || it.length_mm > 0;
             let qtySqm = 0;
             if (hasData) {
-              const l_m = (Number(it.length_mm) || 0) / 1000;
-              const b_m = (Number(it.breadth_mm) || 0) / 1000;
-              const d_m = (Number(it.depth_mm) || 0) / 1000;
+              const l_m = Number(it.length_mm) || 0;
+              const b_m = Number(it.breadth_mm) || 0;
+              const d_m = Number(it.depth_mm) || 0;
               const num = Number(it.no_of_items) || 1;
               qtySqm = (d_m > 0 ? l_m * b_m * d_m : l_m * b_m) * num;
               totalSqm += qtySqm;

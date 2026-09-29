@@ -27,9 +27,9 @@ export default function MeasurementDetailPage() {
 
   let totalSqm = 0;
   sheet.items.forEach(it => {
-    const l = (Number(it.length_mm) || 0) / 1000;
-    const b = (Number(it.breadth_mm) || 0) / 1000;
-    const d = (Number(it.depth_mm) || 0) / 1000;
+    const l = Number(it.length_mm) || 0;
+    const b = Number(it.breadth_mm) || 0;
+    const d = Number(it.depth_mm) || 0;
     const no = Number(it.no_of_items) || 1;
     let qty = 0;
     if (d > 0) qty = l * b * d * no;
@@ -85,18 +85,18 @@ export default function MeasurementDetailPage() {
                 <th className="px-4 py-3 font-semibold">#</th>
                 <th className="px-4 py-3 font-semibold">Particulars</th>
                 <th className="px-4 py-3 font-semibold text-center">No</th>
-                <th className="px-4 py-3 font-semibold text-center">L (mm)</th>
-                <th className="px-4 py-3 font-semibold text-center">B (mm)</th>
-                <th className="px-4 py-3 font-semibold text-center">D (mm)</th>
+                <th className="px-4 py-3 font-semibold text-center">Length</th>
+                <th className="px-4 py-3 font-semibold text-center">Breadth</th>
+                <th className="px-4 py-3 font-semibold text-center">Depth</th>
                 <th className="px-4 py-3 font-semibold text-center bg-orange/5">Qty (Sqm)</th>
                 <th className="px-4 py-3 font-semibold">Remarks</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-navy/5">
               {sheet.items.map((it, idx) => {
-                const l = (Number(it.length_mm) || 0) / 1000;
-                const b = (Number(it.breadth_mm) || 0) / 1000;
-                const d = (Number(it.depth_mm) || 0) / 1000;
+                const l = Number(it.length_mm) || 0;
+                const b = Number(it.breadth_mm) || 0;
+                const d = Number(it.depth_mm) || 0;
                 const no = Number(it.no_of_items) || 1;
                 const qty = d > 0 ? l * b * d * no : l * b * no;
 
