@@ -197,7 +197,7 @@ export default function MeasurementPdf({ sheet }: { sheet: MeasurementSheet }) {
           </View>
 
           {/* Totals Section */}
-          <View style={styles.totalsContainer}>
+          <View style={styles.totalsContainer} wrap={false}>
             <View style={styles.totalsBox}>
               <View style={styles.totalRow}>
                 <Text style={styles.totalLabel}>Gross Area (Sq.M):</Text>
@@ -222,7 +222,7 @@ export default function MeasurementPdf({ sheet }: { sheet: MeasurementSheet }) {
           </View>
         </View>
 
-        <View style={styles.signRow}>
+        <View style={styles.signRow} wrap={false}>
           <View style={styles.signCol}>
             <Text style={styles.signFor}>For {sheet.company_name || 'Kedar Mandal'}</Text>
             <Text style={styles.signName}>Authorized Signatory</Text>
@@ -276,7 +276,7 @@ export default function MeasurementPdf({ sheet }: { sheet: MeasurementSheet }) {
             </View>
           </View>
           
-          <View style={styles.signRow}>
+          <View style={styles.signRow} wrap={false}>
             <View style={styles.signCol}>
               <Text style={styles.signFor}>For {sheet.company_name || 'Kedar Mandal'}</Text>
               <Text style={styles.signName}>Authorized Signatory</Text>
