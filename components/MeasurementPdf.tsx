@@ -50,9 +50,10 @@ export default function MeasurementPdf({ sheet }: { sheet: MeasurementSheet }) {
     displayItems.push({ particulars: "", no_of_items: 0, length_mm: 0, breadth_mm: 0, depth_mm: 0, remarks: "" } as MeasurementItem);
   }
 
-  let totalAdd = 0;
-  let totalLess = 0;
-  let totalSqm = 0;
+  let totalAddSqm = 0;
+  let totalLessSqm = 0;
+  let totalAddRm = 0;
+  let totalLessRm = 0;
   
   return (
     <Document>
@@ -92,20 +93,28 @@ export default function MeasurementPdf({ sheet }: { sheet: MeasurementSheet }) {
 
           {displayItems.map((it, idx) => {
             const hasData = it.particulars || it.length_mm > 0;
-            let qtySqm = 0;
+            let qty = 0;
+            let isRm = false;
+
             if (hasData) {
               const l_m = Number(it.length_mm) || 0;
               const b_m = Number(it.breadth_mm) || 0;
               const d_m = Number(it.depth_mm) || 0;
               const num = Number(it.no_of_items) || 1;
-              qtySqm = (d_m > 0 ? l_m * b_m * d_m : l_m * b_m) * num;
+              
+              if (l_m > 0 && b_m === 0 && d_m === 0) {
+                qty = l_m * num;
+                isRm = true;
+              } else {
+                qty = (d_m > 0 ? l_m * b_m * d_m : l_m * b_m) * num;
+              }
               
               if (it.is_less) {
-                totalLess += qtySqm;
-                totalSqm -= qtySqm;
+                if (isRm) totalLessRm += qty;
+                else totalLessSqm += qty;
               } else {
-                totalAdd += qtySqm;
-                totalSqm += qtySqm;
+                if (isRm) totalAddRm += qty;
+                else totalAddSqm += qty;
               }
             }
 
@@ -125,7 +134,7 @@ export default function MeasurementPdf({ sheet }: { sheet: MeasurementSheet }) {
                 <Text style={[styles.colB, styles.tdText]}>{wrapLess(it.breadth_mm)}</Text>
                 <Text style={[styles.colD, styles.tdText]}>{wrapLess(it.depth_mm)}</Text>
                 <Text style={[styles.colQty, styles.tdText, it.is_less ? { color: "#D32F2F" } : {}]}>
-                  {hasData && qtySqm > 0 ? (it.is_less ? `(${qtySqm.toFixed(4)})` : qtySqm.toFixed(4)) : ""}
+                  {hasData && qty > 0 ? (it.is_less ? `(${qty.toFixed(4)})` : qty.toFixed(4)) : ""}
                 </Text>
                 <Text style={[styles.colRemarks, styles.tdText]}>{it.remarks}</Text>
               </View>
@@ -136,22 +145,86 @@ export default function MeasurementPdf({ sheet }: { sheet: MeasurementSheet }) {
         <View style={styles.totalsBox}>
           <View style={styles.totalRow}>
             <Text style={styles.totalLabel}>Gross Area (Sq.M):</Text>
-            <Text style={styles.totalVal}>{totalAdd.toFixed(4)}</Text>
+            <Text style={styles.totalVal}>{totalAddSqm.toFixed(4)}</Text>
           </View>
           <View style={styles.totalRow}>
             <Text style={styles.totalLabel}>Total Deductions:</Text>
-            <Text style={styles.totalVal}>- {totalLess.toFixed(4)}</Text>
+            <Text style={styles.totalVal}>- {totalLessSqm.toFixed(4)}</Text>
           </View>
           <View style={[styles.totalRow, { marginTop: 5, paddingTop: 5, borderTopWidth: 1, borderTopColor: NAVY }]}>
             <Text style={styles.totalLabel}>Net Area (Sq.M):</Text>
-            <Text style={styles.totalVal}>{totalSqm.toFixed(4)}</Text>
+            <Text style={styles.totalVal}>{(totalAddSqm - totalLessSqm).toFixed(4)}</Text>
           </View>
-          <View style={styles.totalRow}>
-            <Text style={styles.totalLabel}>Net Area (Sq.Ft):</Text>
-            <Text style={styles.totalVal}>{(totalSqm * 10.7639).toFixed(4)}</Text>
-          </View>
+          {totalAddRm > 0 && (
+            <View style={[styles.totalRow, { marginTop: 5 }]}>
+              <Text style={styles.totalLabel}>Net Length (R.M):</Text>
+              <Text style={styles.totalVal}>{(totalAddRm - totalLessRm).toFixed(4)}</Text>
+            </View>
+          )}
         </View>
 
+        <View style={styles.signRow}>
+          <View style={{ flex: 1 }} />
+          <View style={styles.signCol}>
+            <Text style={styles.signName}>{sheet.company_name || 'Kedar Mandal'}</Text>
+          </View>
+        </View>
+      </Page>
+
+      {/* SUMMARY PAGE */}
+      <Page size="A4" style={styles.page}>
+        <View style={[styles.header, { justifyContent: 'center', marginBottom: 40 }]}>
+          <Text style={[styles.headerTitle, { fontSize: 20, textDecoration: 'underline' }]}>ABSTRACT / SUMMARY</Text>
+        </View>
+
+        <View style={styles.metaRow}>
+          <Text style={[styles.metaLabel, { width: 120, fontSize: 12, fontWeight: 'bold' }]}>Name of Work:</Text>
+          <Text style={[styles.metaValue, { fontSize: 12 }]}>{sheet.name_of_work}</Text>
+        </View>
+        <View style={[styles.metaRow, { marginBottom: 30 }]}>
+          <Text style={[styles.metaLabel, { width: 120, fontSize: 12, fontWeight: 'bold' }]}>Particular (Item):</Text>
+          <Text style={[styles.metaValue, { fontSize: 12 }]}>{sheet.item}</Text>
+        </View>
+
+        <View style={[styles.table, { marginTop: 0 }]}>
+          <View style={[styles.tHeadRow, { backgroundColor: '#f0f0f0' }]}>
+            <Text style={[styles.colNo, styles.thText, { width: '10%' }]}>S.No</Text>
+            <Text style={[styles.colParticulars, styles.thText, { width: '50%' }]}>Description</Text>
+            <Text style={[styles.colQty, styles.thText, { width: '20%' }]}>Quantity</Text>
+            <Text style={[styles.colRemarks, styles.thText, { width: '20%' }]}>Unit</Text>
+          </View>
+
+          <View style={styles.tRow}>
+            <Text style={[styles.colNo, styles.tdText, { width: '10%' }]}>1</Text>
+            <Text style={[styles.colParticulars, styles.tdText, { width: '50%' }]}>{sheet.item} (Area)</Text>
+            <Text style={[styles.colQty, styles.tdText, { width: '20%' }]}>{(totalAddSqm - totalLessSqm).toFixed(3)}</Text>
+            <Text style={[styles.colRemarks, styles.tdText, { width: '20%' }]}>Sq.M</Text>
+          </View>
+          <View style={styles.tRow}>
+            <Text style={[styles.colNo, styles.tdText, { width: '10%' }]}>2</Text>
+            <Text style={[styles.colParticulars, styles.tdText, { width: '50%' }]}>{sheet.item} (Area)</Text>
+            <Text style={[styles.colQty, styles.tdText, { width: '20%', fontWeight: 'bold' }]}>{((totalAddSqm - totalLessSqm) * 10.7639).toFixed(3)}</Text>
+            <Text style={[styles.colRemarks, styles.tdText, { width: '20%', fontWeight: 'bold' }]}>Sq.Ft</Text>
+          </View>
+
+          {(totalAddRm - totalLessRm) > 0 && (
+            <>
+              <View style={styles.tRow}>
+                <Text style={[styles.colNo, styles.tdText, { width: '10%' }]}>3</Text>
+                <Text style={[styles.colParticulars, styles.tdText, { width: '50%' }]}>{sheet.item} (Running)</Text>
+                <Text style={[styles.colQty, styles.tdText, { width: '20%' }]}>{(totalAddRm - totalLessRm).toFixed(3)}</Text>
+                <Text style={[styles.colRemarks, styles.tdText, { width: '20%' }]}>R.M</Text>
+              </View>
+              <View style={styles.tRow}>
+                <Text style={[styles.colNo, styles.tdText, { width: '10%' }]}>4</Text>
+                <Text style={[styles.colParticulars, styles.tdText, { width: '50%' }]}>{sheet.item} (Running)</Text>
+                <Text style={[styles.colQty, styles.tdText, { width: '20%', fontWeight: 'bold' }]}>{((totalAddRm - totalLessRm) * 3.28084).toFixed(3)}</Text>
+                <Text style={[styles.colRemarks, styles.tdText, { width: '20%', fontWeight: 'bold' }]}>R.Ft</Text>
+              </View>
+            </>
+          )}
+        </View>
+        
         <View style={styles.signRow}>
           <View style={{ flex: 1 }} />
           <View style={styles.signCol}>

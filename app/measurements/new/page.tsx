@@ -59,25 +59,39 @@ export default function NewMeasurementPage() {
   }
 
   // Calculate live totals
-  let totalAdd = 0;
-  let totalLess = 0;
+  let totalAddSqm = 0;
+  let totalLessSqm = 0;
+  let totalAddRm = 0;
+  let totalLessRm = 0;
+  
   items.forEach(it => {
     const l = Number(it.length_mm) || 0;
     const b = Number(it.breadth_mm) || 0;
     const d = Number(it.depth_mm) || 0;
     const no = Number(it.no_of_items) || 1;
     let qty = 0;
-    if (d > 0) qty = l * b * d * no;
-    else qty = l * b * no;
+    let isRm = false;
+    
+    if (l > 0 && b === 0 && d === 0) {
+      qty = l * no;
+      isRm = true;
+    } else if (d > 0) {
+      qty = l * b * d * no;
+    } else {
+      qty = l * b * no;
+    }
     
     if (it.is_less) {
-      totalLess += qty;
+      if (isRm) totalLessRm += qty;
+      else totalLessSqm += qty;
     } else {
-      totalAdd += qty;
+      if (isRm) totalAddRm += qty;
+      else totalAddSqm += qty;
     }
   });
 
-  const totalSqm = totalAdd - totalLess;
+  const totalSqm = totalAddSqm - totalLessSqm;
+  const totalRm = totalAddRm - totalLessRm;
 
   return (
     <div className="space-y-6 pb-20">
@@ -230,11 +244,11 @@ export default function NewMeasurementPage() {
           <h3 className="text-lg font-bold border-b border-white/10 pb-2 mb-4">Live Totals</h3>
           <div className="flex justify-between items-center text-sm">
             <span className="text-white/70 font-medium">Gross Area:</span>
-            <span className="font-mono text-lg">{totalAdd.toFixed(4)}</span>
+            <span className="font-mono text-lg">{totalAddSqm.toFixed(4)}</span>
           </div>
           <div className="flex justify-between items-center text-sm text-red-300">
             <span className="font-medium">Total Deductions:</span>
-            <span className="font-mono text-lg">- {totalLess.toFixed(4)}</span>
+            <span className="font-mono text-lg">- {totalLessSqm.toFixed(4)}</span>
           </div>
           <div className="flex justify-between items-center text-sm pt-2 border-t border-white/10">
             <span className="text-white/70 font-medium">Net Area (Sq.M):</span>
@@ -244,6 +258,12 @@ export default function NewMeasurementPage() {
             <span className="text-white/70 font-medium">Net Area (Sq.Ft):</span>
             <span className="font-mono text-lg text-orange font-bold">{(totalSqm * 10.7639).toFixed(4)}</span>
           </div>
+          {totalAddRm > 0 && (
+            <div className="flex justify-between items-center text-sm pt-2 border-t border-white/10">
+              <span className="text-white/70 font-medium">Net Length (R.M / R.Ft):</span>
+              <span className="font-mono text-lg font-bold">{totalRm.toFixed(4)} / {(totalRm * 3.28084).toFixed(4)}</span>
+            </div>
+          )}
         </div>
       </div>
     </div>
