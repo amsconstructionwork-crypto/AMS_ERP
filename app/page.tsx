@@ -143,9 +143,14 @@ function Card({ title, value, icon, color }: { title: string; value: string; ico
       <div className={`mr-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-xl ${isOrange ? "bg-[#FFF3EE] text-orange" : "bg-navy/10 text-navy"}`}>
         {icon}
       </div>
-      <div>
-        <p className="text-sm font-medium text-navy/60">{title}</p>
-        <p className={`mt-1 font-sans text-2xl font-bold tracking-tight ${isOrange ? "text-orange" : "text-navy"}`}>{value}</p>
+      <div className="min-w-0 flex-1">
+        <p className="text-sm font-medium text-navy/60 truncate">{title}</p>
+        <p 
+          title={value}
+          className={`mt-1 font-sans text-xl md:text-2xl font-bold tracking-tight truncate ${isOrange ? "text-orange" : "text-navy"}`}
+        >
+          {value}
+        </p>
       </div>
     </div>
   );
